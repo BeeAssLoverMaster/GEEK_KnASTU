@@ -1,16 +1,19 @@
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
     namespace = "com.shkonda.geekknastu"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.shkonda.geekknastu"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -59,11 +62,32 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation("com.google.firebase:firebase-auth:22.2.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    //Дополнительные иконки
+    implementation("androidx.compose.material:material-icons-extended-android:1.5.3")
+
+    //Navigation
+    implementation("androidx.navigation:navigation-common:2.7.4")
+
+    //Firebase
+//    implementation("com.google.firebase:firebase-auth-ktx:21.1.0")
+    implementation("com.google.android.gms:play-services-auth:20.4.1")
+
+    //
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.0")
+    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("io.coil-kt:coil-compose:2.2.2")
 }
