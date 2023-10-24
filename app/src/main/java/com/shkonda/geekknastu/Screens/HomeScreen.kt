@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -27,8 +29,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.shkonda.geekknastu.TabItem
 import com.shkonda.geekknastu.backgroundColor
+import com.shkonda.geekknastu.bottom_navigation.BottomNavigation
+import com.shkonda.geekknastu.bottom_navigation.NavGraph
+import com.shkonda.geekknastu.top_bar.TopBarDecode
+
+/*1.0*/
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -107,6 +115,4 @@ fun HomeScreen() {
             }
         }
     }
-
-
 }

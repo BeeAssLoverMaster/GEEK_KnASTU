@@ -1,72 +1,28 @@
 package com.shkonda.geekknastu
 
-import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Event
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Event
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.shkonda.geekknastu.bottom_navigation.BottomNavigation
-import com.shkonda.geekknastu.bottom_navigation.MainScreen
-import com.shkonda.geekknastu.bottom_navigation.NavGraph
-import com.shkonda.geekknastu.top_bar.TopBarDecode
+import com.shkonda.geekknastu.navigation.NavigationGraph
 import com.shkonda.geekknastu.ui.theme.GEEKKnASTUTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 data class BottomNavigationItem(
     val title: String,
@@ -75,22 +31,23 @@ data class BottomNavigationItem(
     val hasNews: Boolean,
     val badgeCount: Int? = null
 )
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    GEEKKnASTUTheme {
-        MainScreen()
-    }
-}
 
+lateinit var sharedPreferences: SharedPreferences
+var PREFS_KEY = "prefs"
+var EMAIL_KEY = "email"
+var PASSWORD_KEY = "pwd"
+
+var e = ""
+var p = ""
+@AndroidEntryPoint
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
+            val navController = rememberNavController()
+            sharedPreferences = getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
             GEEKKnASTUTheme {
-                val navController = rememberNavController()
                 /*
                 val items = listOf(
                     BottomNavigationItem("Home", Icons.Filled.Home, Icons.Outlined.Home, false),
@@ -150,18 +107,30 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 */
-                Scaffold(
-                    topBar = { TopBarDecode() },
-                    bottomBar = { BottomNavigation(navController) }
-                ) { innerPadding ->
-                    Box(modifier = Modifier.padding(innerPadding)) {
-                        NavGraph(navHostController = navController)
-                    }
 
-                }
+                NavigationGraph(sharedPreferences = sharedPreferences)
+
             }
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        val activity = (this as? Activity)
+
+        sharedPreferences = getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
+
+        val email = sharedPreferences.getString(EMAIL_KEY, "").toString()
+        val password = sharedPreferences.getString(PASSWORD_KEY, "").toString()
+
+        if (email != "" && password != "") {
+            val intent = Intent(this, MainAppActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
+        }
+    }
+
+
 }
 
 val backgroundColor: Color = Color(25, 118, 211)
@@ -190,6 +159,7 @@ fun BottomAppBarWithNavigation(
     }
 }
 
+
 @Composable
 fun NavigationItem(
     navController: NavHostController,
@@ -206,6 +176,7 @@ fun NavigationItem(
         )
     }
 }
+/*
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen() {
@@ -352,7 +323,7 @@ fun EventsScreen() {
     Text("EventsScreen")
 }
 
-
+*/
 /*ИЗНАЧАЛЬНАЯ ИДЕЯ*/
 /*
 data class TabItem(

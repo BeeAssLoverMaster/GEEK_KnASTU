@@ -8,8 +8,6 @@ import androidx.compose.material.icons.outlined.Event
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.shkonda.geekknastu.R
-import com.shkonda.geekknastu.Screen
 
 sealed class BottomItem(
     val title: String,
