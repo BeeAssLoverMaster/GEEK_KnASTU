@@ -6,13 +6,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.shkonda.geekknastu.Screens.login_screen.SignInScreen
+import com.shkonda.geekknastu.Screens.HomeScreen
 import com.shkonda.geekknastu.Screens.signup_screen.SignUpScreen
+import com.shkonda.geekknastu.SignInScreen
 
 @Composable
 fun NavigationGraph(
+    sharedPreferences: SharedPreferences,
     navController: NavHostController = rememberNavController(),
-    sharedPreferences: SharedPreferences
 ) {
     NavHost(
         navController = navController,
@@ -24,9 +25,6 @@ fun NavigationGraph(
         composable(route = Screens.SignUpScreen.route) {
             SignUpScreen(navController)
         }
-//        composable(route = Screens.AllScreens.route) {
-//            AllScreens()
-//        }
     }
 
 }

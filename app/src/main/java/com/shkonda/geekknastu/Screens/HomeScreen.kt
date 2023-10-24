@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.shkonda.geekknastu.TabItem
 import com.shkonda.geekknastu.backgroundColor
 import com.shkonda.geekknastu.bottom_navigation.BottomNavigation
@@ -41,6 +43,8 @@ import com.shkonda.geekknastu.top_bar.TopBarDecode
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen() {
+
+    val mAuth = FirebaseAuth.getInstance()
     val tabItems = listOf(
         TabItem(
             title = "Деятельность"
@@ -96,6 +100,7 @@ fun HomeScreen() {
                     },
                     text = {
                         Text(text = item.title)
+
                     }
                 )
             }
@@ -106,12 +111,16 @@ fun HomeScreen() {
                 .fillMaxWidth()
                 .weight(1f)
         ) { index ->
-            Box(
+            Column(
                 modifier = Modifier
                     .fillMaxSize(),
-                contentAlignment = Alignment.Center
             ) {
                 Text(tabItems[index].title)
+                mAuth.currentUser?.let {
+                    Text(modifier = Modifier.padding(20.dp),
+                        text = it.uid
+                    )
+                }
             }
         }
     }
