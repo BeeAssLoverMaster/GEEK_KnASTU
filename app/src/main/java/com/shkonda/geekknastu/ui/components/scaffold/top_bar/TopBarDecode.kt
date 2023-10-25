@@ -1,4 +1,4 @@
-package com.shkonda.geekknastu.top_bar
+package com.shkonda.geekknastu.ui.components.scaffold.top_bar
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.shkonda.geekknastu.backgroundColor
+import com.shkonda.geekknastu.ui.theme.BlueTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,7 +26,7 @@ fun TopBarDecode() {
         },
 
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = backgroundColor,
+            containerColor = BlueTopBar,
             titleContentColor = Color.White,
         ),
     )

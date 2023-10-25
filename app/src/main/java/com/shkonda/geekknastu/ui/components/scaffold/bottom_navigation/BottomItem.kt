@@ -1,4 +1,4 @@
-package com.shkonda.geekknastu.bottom_navigation
+package com.shkonda.geekknastu.ui.components.scaffold.bottom_navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Event
@@ -15,9 +15,11 @@ sealed class BottomItem(
     val unselectedIcon: ImageVector,
     val route: String
 ) {
-    object Home: BottomItem("Home", Icons.Filled.Home,
-        Icons.Outlined.Home,
-        "home")
+    object Home: BottomItem(
+        title = "Home",
+        selectedIcon = Icons.Filled.Home,
+        unselectedIcon = Icons.Outlined.Home,
+        route = "home")
     object Events: BottomItem("Events", Icons.Filled.Event,
         Icons.Outlined.Event,
         "events")

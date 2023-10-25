@@ -10,14 +10,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.shkonda.geekknastu.bottom_navigation.BottomNavigation
-import com.shkonda.geekknastu.bottom_navigation.NavGraph
-import com.shkonda.geekknastu.top_bar.TopBarDecode
+import com.shkonda.geekknastu.ui.components.scaffold.bottom_navigation.BottomNavigation
+import com.shkonda.geekknastu.ui.components.scaffold.bottom_navigation.NavGraph
+import com.shkonda.geekknastu.ui.components.scaffold.top_bar.TopBarDecode
 import com.shkonda.geekknastu.ui.theme.GEEKKnASTUTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

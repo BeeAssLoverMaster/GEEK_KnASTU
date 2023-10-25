@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="menu">
+        <item>Конкурсы</item>
+        <item>Мероприятия</item>
+    </string-array>
+
+    <string-array name="Contests">
+        <item>Везде цифра|always_digital.jpg</item>
+    </string-array>
+    <string-array name="Conferences">
+        <item>Наука, инновации и технологии: от идей к внедрению|science_inovation.jpg</item>
+    </string-array>
+</resources>

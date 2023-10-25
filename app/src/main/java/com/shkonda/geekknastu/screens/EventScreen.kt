@@ -1,20 +1,19 @@
-package com.shkonda.geekknastu.Screens
+package com.shkonda.geekknastu.screens
 
+import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -23,34 +22,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
-import com.google.firebase.auth.FirebaseAuth
 import com.shkonda.geekknastu.TabItem
-import com.shkonda.geekknastu.backgroundColor
-import com.shkonda.geekknastu.bottom_navigation.BottomNavigation
-import com.shkonda.geekknastu.bottom_navigation.NavGraph
-import com.shkonda.geekknastu.top_bar.TopBarDecode
-
-/*1.0*/
+import com.shkonda.geekknastu.ui.components.MainListItem
+import com.shkonda.geekknastu.ui.theme.BlueTopBar
+import com.shkonda.geekknastu.util.IdArrayList
+import com.shkonda.geekknastu.util.ListItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen() {
-
-    val mAuth = FirebaseAuth.getInstance()
+fun EventScreen() {
+    val context = LocalContext.current
     val tabItems = listOf(
         TabItem(
-            title = "Деятельность"
+            title = "Конкурсы"
         ),
         TabItem(
-            title = "Занятость"
+            title = "Конференции"
         )
     )
     var selectedTabIndex by remember {
@@ -67,13 +61,14 @@ fun HomeScreen() {
             selectedTabIndex = pagerState.currentPage
         }
     }
+
     Column(
 //        modifier = Modifier
 //            .padding(innerPadding)
     ) {
         TabRow(
             selectedTabIndex = selectedTabIndex,
-            containerColor = backgroundColor,
+            containerColor = BlueTopBar,
             contentColor = Color.White,
             indicator = { tabPositions ->
                 Box(
@@ -100,7 +95,6 @@ fun HomeScreen() {
                     },
                     text = {
                         Text(text = item.title)
-
                     }
                 )
             }
@@ -111,17 +105,67 @@ fun HomeScreen() {
                 .fillMaxWidth()
                 .weight(1f)
         ) { index ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-            ) {
-                Text(tabItems[index].title)
-                mAuth.currentUser?.let {
-                    Text(modifier = Modifier.padding(20.dp),
-                        text = it.uid
-                    )
+            when (index) {
+                0 -> {
+                    Contests(context, index)
+                }
+
+                1 -> {
+                    Conferences(context, index)
                 }
             }
         }
     }
+}
+
+@Composable
+fun Contests(
+    context: Context,
+    index: Int
+) {
+    val mainList = remember {
+        mutableStateOf(getListItemsByIndex(index, context))
+    }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        items(mainList.value) { item ->
+            MainListItem(item = item)
+        }
+    }
+}
+
+@Composable
+fun Conferences(
+    context: Context,
+    index: Int
+) {
+    val mainList = remember {
+        mutableStateOf(getListItemsByIndex(index, context))
+    }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        items(mainList.value) { item ->
+            MainListItem(item = item)
+        }
+    }
+}
+
+private fun getListItemsByIndex(
+    index: Int,
+    context: Context
+): List<ListItem> {
+    val list = ArrayList<ListItem>()
+    val arrayList = context.resources.getStringArray(IdArrayList.listId[index])
+    arrayList.forEach { item ->
+        val itemArray = item.split("|")
+        list.add(
+            ListItem(
+                title = itemArray[0],
+                imageName = itemArray[1]
+            )
+        )
+    }
+    return list
 }

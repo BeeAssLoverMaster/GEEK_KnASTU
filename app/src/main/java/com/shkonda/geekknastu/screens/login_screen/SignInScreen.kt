@@ -1,5 +1,7 @@
-package com.shkonda.geekknastu.Screens.signup_screen
+package com.shkonda.geekknastu.screens.login_screen
 
+import android.app.Activity
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,15 +12,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -34,13 +32,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.shkonda.geekknastu.R
+import com.shkonda.geekknastu.MainAppActivity
 import com.shkonda.geekknastu.navigation.Screens
 import com.shkonda.geekknastu.ui.theme.LightBlue
 import com.shkonda.geekknastu.ui.theme.RegularFont
@@ -48,15 +45,16 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen(
+fun SignInScreen(
     navController: NavController,
-    viewModel: SignUpViewModel = hiltViewModel()
+    viewModel: SignInViewModel = hiltViewModel()
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val state = viewModel.signUpState.collectAsState(initial = null)
+    val state = viewModel.signInState.collectAsState(initial = null)
+    val activity = (LocalContext.current as? Activity)
 
     Column(
         modifier = Modifier
@@ -67,113 +65,106 @@ fun SignUpScreen(
     ) {
         Text(
             modifier = Modifier.padding(bottom = 10.dp),
-            text = "Создать аккаунт",
+            text = "Войти в аккаунт",
             fontWeight = FontWeight.Bold,
             fontSize = 35.sp,
             fontFamily = RegularFont,
         )
         Text(
-            text = "Введите свои данные для регистрации",
+            text = "Введите свои данные для входа",
             fontWeight = FontWeight.Medium,
-            fontSize = 15.sp, color = Color.Gray,
-            fontFamily = RegularFont,
-
-            )
+            fontSize = 15.sp,
+            color = Color.Gray,
+            fontFamily = RegularFont
+        )
         TextField(
-            modifier = Modifier.fillMaxWidth(),
             value = email,
+            onValueChange = {
+                email = it
+            },
+            modifier = Modifier.fillMaxWidth(),
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = LightBlue,
                 cursorColor = Color.Black,
-                disabledLabelColor = LightBlue,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            onValueChange = {
-                email = it
-
-            },
-            shape = RoundedCornerShape(8.dp),
-            singleLine = true,
-            placeholder = {
+                disabledLabelColor = LightBlue, unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent
+            ), shape = RoundedCornerShape(8.dp), singleLine = true, placeholder = {
                 Text(text = "Email")
             }
         )
-
         Spacer(modifier = Modifier.height(16.dp))
         TextField(
-            modifier = Modifier.fillMaxWidth(),
             value = password,
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = LightBlue,
-                cursorColor = Color.Black,
-                disabledLabelColor = LightBlue,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
             onValueChange = {
                 password = it
             },
-            shape = RoundedCornerShape(8.dp),
-            singleLine = true,
-            placeholder = {
+            modifier = Modifier.fillMaxWidth(),
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = LightBlue,
+                cursorColor = Color.Black,
+                disabledLabelColor = LightBlue, unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent
+            ), shape = RoundedCornerShape(8.dp), singleLine = true, placeholder = {
                 Text(text = "Пароль")
             }
         )
+
         Button(
             onClick = {
                 scope.launch {
-                    viewModel.registerUser(email, password)
+                    viewModel.loginUser(email, password)
+
                 }
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 20.dp, start = 30.dp, end = 30.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Black,
-                contentColor = Color.White
+                containerColor = Color.Black, contentColor = Color.White
             ),
             shape = RoundedCornerShape(15.dp)
         ) {
-            Text(
-                text = "Зарегистрироваться",
-                color = Color.White,
-                modifier = Modifier
-                    .padding(7.dp)
-            )
+            Text(text = "Войти", color = Color.White, modifier = Modifier.padding(7.dp))
         }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             if (state.value?.isLoading == true) {
                 CircularProgressIndicator()
             }
+
         }
         Text(
             modifier = Modifier
-                .padding(15.dp)
+                .padding(14.dp)
                 .clickable {
-                    navController.navigate(Screens.SignInScreen.route)
+                    navController.navigate(Screens.SignUpScreen.route)
                 },
-            text = "Уже есть аккаунт? Войдите ",
+            text = "Новый пользователь? Зарегистрируйся ",
             fontWeight = FontWeight.Bold,
             color = Color.Black,
             fontFamily = RegularFont
         )
-    }
 
-    LaunchedEffect(key1 = state.value?.isSuccess) {
-        scope.launch {
-            if (state.value?.isSuccess?.isNotEmpty() == true) {
-                val success = state.value?.isSuccess
-                Toast.makeText(context, "$success", Toast.LENGTH_LONG).show()
+        LaunchedEffect(key1 = state.value?.isSuccess) {
+            scope.launch {
+                if (state.value?.isSuccess?.isNotEmpty() == true) {
+                    val success = state.value?.isSuccess
+                    val intent = Intent(context, MainAppActivity::class.java)
+                    Toast.makeText(context, "${success}", Toast.LENGTH_LONG).show()
+                    context.startActivity(intent)
+                    activity?.finish()
+                }
             }
         }
-    }
-    LaunchedEffect(key1 = state.value?.isError) {
-        scope.launch {
-            if (state.value?.isError?.isNotBlank() == true) {
-                val error = state.value?.isError
-                Toast.makeText(context, "$error", Toast.LENGTH_LONG).show()
+
+        LaunchedEffect(key1 = state.value?.isError) {
+            scope.launch {
+                if (state.value?.isError?.isNotEmpty() == true) {
+                    val error = state.value?.isError
+                    Toast.makeText(context, "${error}", Toast.LENGTH_LONG).show()
+
+                }
             }
         }
+
     }
 }
