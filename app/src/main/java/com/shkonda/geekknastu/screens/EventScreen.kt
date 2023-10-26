@@ -37,7 +37,9 @@ import com.shkonda.geekknastu.util.ListItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun EventScreen() {
+fun EventScreen(
+    onClick: (ListItem) -> Unit
+) {
     val context = LocalContext.current
     val tabItems = listOf(
         TabItem(
@@ -107,11 +109,15 @@ fun EventScreen() {
         ) { index ->
             when (index) {
                 0 -> {
-                    Contests(context, index)
+                    Contests(context, index) { listItem ->
+                        onClick(listItem)
+                    }
                 }
 
                 1 -> {
-                    Conferences(context, index)
+                    Conferences(context, index) { listItem ->
+                        onClick(listItem)
+                    }
                 }
             }
         }
@@ -121,7 +127,8 @@ fun EventScreen() {
 @Composable
 fun Contests(
     context: Context,
-    index: Int
+    index: Int,
+    onClick: (ListItem) -> Unit
 ) {
     val mainList = remember {
         mutableStateOf(getListItemsByIndex(index, context))
@@ -130,15 +137,19 @@ fun Contests(
         modifier = Modifier.fillMaxSize()
     ) {
         items(mainList.value) { item ->
-            MainListItem(item = item)
+            MainListItem(item = item) { listItem ->
+                onClick(listItem)
+            }
         }
+
     }
 }
 
 @Composable
 fun Conferences(
     context: Context,
-    index: Int
+    index: Int,
+    onClick: (ListItem) -> Unit
 ) {
     val mainList = remember {
         mutableStateOf(getListItemsByIndex(index, context))
@@ -147,7 +158,9 @@ fun Conferences(
         modifier = Modifier.fillMaxSize()
     ) {
         items(mainList.value) { item ->
-            MainListItem(item = item)
+            MainListItem(item = item) { listItem ->
+                onClick(listItem)
+            }
         }
     }
 }
@@ -163,7 +176,8 @@ private fun getListItemsByIndex(
         list.add(
             ListItem(
                 title = itemArray[0],
-                imageName = itemArray[1]
+                imageName = itemArray[1],
+                htmlName = itemArray[2]
             )
         )
     }

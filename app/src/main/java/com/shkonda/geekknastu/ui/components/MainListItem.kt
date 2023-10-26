@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,12 +27,18 @@ import com.shkonda.geekknastu.ui.theme.BlueTopBar
 import com.shkonda.geekknastu.util.ListItem
 
 @Composable
-fun MainListItem(item: ListItem) {
+fun MainListItem(
+    item: ListItem,
+    onClick: (ListItem) -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxSize()
             .height(250.dp)
-            .padding(5.dp),
+            .padding(5.dp)
+            .clickable {
+                onClick(item)
+            },
         shape = RoundedCornerShape(10.dp),
         border = BorderStroke(5.dp, BlueTopBar)
     ) {
@@ -41,7 +48,8 @@ fun MainListItem(item: ListItem) {
         ) {
             AssetImage(
                 imageName = item.imageName,
-                contentDescription = item.title
+                contentDescription = item.title,
+                Modifier.fillMaxSize()
             )
             Text(
                 text = item.title,
@@ -49,7 +57,7 @@ fun MainListItem(item: ListItem) {
                     .fillMaxWidth()
                     .background(BlueTopBar)
                     .padding(10.dp),
-                textAlign =  TextAlign.Center,
+                textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
@@ -58,7 +66,7 @@ fun MainListItem(item: ListItem) {
 }
 
 @Composable
-fun AssetImage(imageName: String, contentDescription: String) {
+fun AssetImage(imageName: String, contentDescription: String, modifier: Modifier) {
     val context = LocalContext.current
     val assetManager = context.assets
     val inputStream = assetManager.open(imageName)
@@ -68,6 +76,6 @@ fun AssetImage(imageName: String, contentDescription: String) {
         bitmap = bitMap.asImageBitmap(),
         contentDescription = contentDescription,
         contentScale = ContentScale.Crop,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier
     )
 }

@@ -6,9 +6,10 @@
     </string-array>
 
     <string-array name="Contests">
-        <item>Везде цифра|always_digital.jpg</item>
+        <item>Везде цифра|always_digital.jpg|always_digital.html</item>
+        <item>Ардуинатор|arduinator.jpg|always_digital.html</item>
     </string-array>
     <string-array name="Conferences">
-        <item>Наука, инновации и технологии: от идей к внедрению|science_inovation.jpg</item>
+        <item>Наука, инновации и технологии: от идей к внедрению|science_innovation.jpg|science_innovation.html</item>
     </string-array>
 </resources>

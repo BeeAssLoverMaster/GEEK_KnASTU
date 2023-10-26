@@ -1,4 +1,4 @@
-package com.shkonda.geekknastu.data_base.util
+package com.shkonda.geekknastu.util
 
 sealed class Resource<T>(val data: T? = null, val message: String? = null) {
     class Success<T>(data: T) : Resource<T>(data)

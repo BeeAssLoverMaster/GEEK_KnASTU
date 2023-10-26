@@ -3,7 +3,7 @@ package com.shkonda.geekknastu.screens.signup_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shkonda.geekknastu.data_base.authorization.AuthRepository
-import com.shkonda.geekknastu.data_base.util.Resource
+import com.shkonda.geekknastu.util.Resource
 import com.shkonda.geekknastu.screens.login_screen.SignInState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
