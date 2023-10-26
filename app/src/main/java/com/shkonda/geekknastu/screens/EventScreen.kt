@@ -41,8 +41,9 @@ fun EventScreen(
     onClick: (ListItem) -> Unit
 ) {
     val mainList = mainViewModel.mainList
-//    mainViewModel.getAllItemsByCategory("Конкурсы")
-    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        mainViewModel.getAllItemsByCategory("Конкурсы")
+    }
     val tabItems = listOf(
         TabItem(
             title = "Конкурсы"
@@ -66,10 +67,7 @@ fun EventScreen(
         }
     }
 
-    Column(
-//        modifier = Modifier
-//            .padding(innerPadding)
-    ) {
+    Column {
         TabRow(
             selectedTabIndex = selectedTabIndex,
             containerColor = BlueTopBar,
@@ -111,9 +109,7 @@ fun EventScreen(
         ) { index ->
             /*when (index) {
                 0 -> {
-                    Contests(index, mainViewModel) { listItem ->
-                        onClick(listItem)
-                    }
+                    Text(text = "${mainList.value}")
                 }
 
                 1 -> {

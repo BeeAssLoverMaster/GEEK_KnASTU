@@ -17,12 +17,12 @@ fun NavGraph(
     navHostController: NavHostController
 ) {
     var item: ListItem? = null
-    val mainList = remember {
-        mutableListOf(item)
-    }
     NavHost(navHostController, startDestination = "Home") {
         composable("Home") {
-            HomeScreen()
+            HomeScreen() { listItem ->
+                item = listItem
+                navHostController.navigate(Routes.INFO_SCREEN)
+            }
         }
         composable("Events") {
             EventScreen() { listItem ->
