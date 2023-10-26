@@ -12,11 +12,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.shkonda.geekknastu.ui.components.scaffold.bottom_navigation.BottomNavigation
-import com.shkonda.geekknastu.ui.components.scaffold.bottom_navigation.NavGraph
+import com.shkonda.geekknastu.navigation.BottomNavigation
+import com.shkonda.geekknastu.navigation.NavGraph
 import com.shkonda.geekknastu.ui.components.scaffold.top_bar.TopBarDecode
 import com.shkonda.geekknastu.ui.theme.GEEKKnASTUTheme
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+/*Появляется после входа в аккаунт*/
+@AndroidEntryPoint
 @OptIn(ExperimentalMaterial3Api::class)
 class MainAppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

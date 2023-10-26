@@ -2,7 +2,7 @@
 <resources>
     <string-array name="menu">
         <item>Конкурсы</item>
-        <item>Мероприятия</item>
+        <item>Конференции</item>
     </string-array>
 
     <string-array name="Contests">

@@ -1,4 +1,4 @@
-package com.shkonda.geekknastu.ui.components.scaffold.bottom_navigation
+package com.shkonda.geekknastu.navigation
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.shkonda.geekknastu.ui.components.scaffold.bottom_navigation.BottomItem
 
 @Composable
 fun BottomNavigation(

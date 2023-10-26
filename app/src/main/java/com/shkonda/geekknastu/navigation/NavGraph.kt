@@ -1,4 +1,4 @@
-package com.shkonda.geekknastu.ui.components.scaffold.bottom_navigation
+package com.shkonda.geekknastu.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

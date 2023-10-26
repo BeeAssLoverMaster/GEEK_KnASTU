@@ -1,6 +1,5 @@
 package com.shkonda.geekknastu.screens
 
-import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -22,24 +21,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.shkonda.geekknastu.MainViewModel
 import com.shkonda.geekknastu.TabItem
 import com.shkonda.geekknastu.ui.components.MainListItem
 import com.shkonda.geekknastu.ui.theme.BlueTopBar
-import com.shkonda.geekknastu.util.IdArrayList
 import com.shkonda.geekknastu.util.ListItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EventScreen(
+    mainViewModel: MainViewModel = hiltViewModel(),
     onClick: (ListItem) -> Unit
 ) {
+    val mainList = mainViewModel.mainList
+//    mainViewModel.getAllItemsByCategory("Конкурсы")
     val context = LocalContext.current
     val tabItems = listOf(
         TabItem(
@@ -107,32 +109,42 @@ fun EventScreen(
                 .fillMaxWidth()
                 .weight(1f)
         ) { index ->
-            when (index) {
+            /*when (index) {
                 0 -> {
-                    Contests(context, index) { listItem ->
+                    Contests(index, mainViewModel) { listItem ->
                         onClick(listItem)
                     }
                 }
 
                 1 -> {
-                    Conferences(context, index) { listItem ->
+                    Conferences(index, mainViewModel) { listItem ->
+                        onClick(listItem)
+                    }
+                }
+            }*/
+
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(mainList.value) { item ->
+                    MainListItem(item = item) { listItem ->
                         onClick(listItem)
                     }
                 }
             }
+            mainViewModel.getAllItemsByCategory(tabItems[index].title)
         }
     }
 }
 
 @Composable
 fun Contests(
-    context: Context,
     index: Int,
+    mainViewModel: MainViewModel,
     onClick: (ListItem) -> Unit
 ) {
-    val mainList = remember {
-        mutableStateOf(getListItemsByIndex(index, context))
-    }
+    val mainList = mainViewModel.mainList
+    mainViewModel.getAllItemsByCategory("Конкурсы")
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -147,13 +159,12 @@ fun Contests(
 
 @Composable
 fun Conferences(
-    context: Context,
     index: Int,
+    mainViewModel: MainViewModel,
     onClick: (ListItem) -> Unit
 ) {
-    val mainList = remember {
-        mutableStateOf(getListItemsByIndex(index, context))
-    }
+    val mainList = mainViewModel.mainList
+    mainViewModel.getAllItemsByCategory("Конференции")
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -163,23 +174,4 @@ fun Conferences(
             }
         }
     }
-}
-
-private fun getListItemsByIndex(
-    index: Int,
-    context: Context
-): List<ListItem> {
-    val list = ArrayList<ListItem>()
-    val arrayList = context.resources.getStringArray(IdArrayList.listId[index])
-    arrayList.forEach { item ->
-        val itemArray = item.split("|")
-        list.add(
-            ListItem(
-                title = itemArray[0],
-                imageName = itemArray[1],
-                htmlName = itemArray[2]
-            )
-        )
-    }
-    return list
 }
