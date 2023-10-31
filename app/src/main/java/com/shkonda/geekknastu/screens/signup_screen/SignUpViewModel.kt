@@ -24,7 +24,7 @@ class SignUpViewModel @Inject constructor(
         repository.registerUser(email, password).collect{result ->
             when(result){
                 is Resource.Success ->{
-                    _signUpState.send(SignInState(isSuccess = "Sign Up Success "))
+                    _signUpState.send(SignInState(isSuccess = "Вы зарегистрировались!"))
                 }
                 is Resource.Loading ->{
                     _signUpState.send(SignInState(isLoading = true))

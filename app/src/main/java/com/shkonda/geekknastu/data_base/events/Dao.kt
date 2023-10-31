@@ -16,9 +16,9 @@ interface Dao {
     @Delete
     suspend fun deleteItem(item: ListItem)
 
-    @Query("SELECT * FROM main WHERE category LIKE :cat")
+    @Query("SELECT * FROM events WHERE category LIKE :cat")
     fun getAllItemsByCategory(cat: String): Flow<List<ListItem>>
 
-    @Query("SELECT * FROM main WHERE isFav =  1")
+    @Query("SELECT * FROM events WHERE isFav =  1")
     fun getFavorites(): Flow<List<ListItem>>
 }

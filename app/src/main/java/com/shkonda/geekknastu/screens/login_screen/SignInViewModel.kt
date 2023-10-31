@@ -23,13 +23,12 @@ class SignInViewModel @Inject constructor(
         repository.loginUser(email, password).collect { result ->
             when (result) {
                 is Resource.Success -> {
-                    _signInState.send(SignInState(isSuccess = "Sign In Success "))
+                    _signInState.send(SignInState(isSuccess = "Добро пожаловать!"))
                 }
                 is Resource.Loading -> {
                     _signInState.send(SignInState(isLoading = true))
                 }
                 is Resource.Error -> {
-
                     _signInState.send(SignInState(isError = result.message))
                 }
             }

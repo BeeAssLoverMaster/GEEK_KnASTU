@@ -18,7 +18,7 @@ object MainModule {
         return Room.databaseBuilder(
             app,
             MainDb::class.java,
-            "info.db"
-        ).createFromAsset("db/info.db").build()
+            "events_info"
+        ).createFromAsset("db/events_info.db").build()
     }
 }

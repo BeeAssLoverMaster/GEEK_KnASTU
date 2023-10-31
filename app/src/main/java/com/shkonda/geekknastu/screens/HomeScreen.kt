@@ -138,11 +138,19 @@ fun HomeScreen(mainViewModel: MainViewModel = hiltViewModel(), onClick: (ListIte
 
                             }
                         }
+                        mainViewModel.getFavorites()
                     }
                 }
 
                 1 -> {
-                    Text(tabItems[index].title)
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text("Здесь будет располагаться диаграмма Ганта")
+                    }
+
                 }
             }
         }

@@ -51,61 +51,9 @@ fun MainListItem(
                 onClick(item)
             },
         shape = RoundedCornerShape(10.dp),
-        border = BorderStroke(5.dp, BlueTopBar)
+        border = BorderStroke(4.dp, BlueTopBar)
     ) {
-        ConstraintLayout(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            val (image, text, favoriteButton) = createRefs()
-            AssetImage(
-                imageName = item.imageName,
-                contentDescription = item.title,
-                Modifier
-                    .fillMaxSize()
-                    .constrainAs(image) {
-                        start.linkTo(parent.start)
-                        top.linkTo(parent.top)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                    }
-            )
-            Text(
-                text = item.title,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(BlueTopBar)
-                    .padding(10.dp)
-                    .constrainAs(text) {
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                    },
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-            IconButton(
-                onClick = {
-                          mainViewModel.insertItem(
-                              item.copy(isFav = !item.isFav)
-                          )
-                },
-                modifier = Modifier.constrainAs(favoriteButton) {
-                    top.linkTo(parent.top)
-                    end.linkTo(parent.end)
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Favorite,
-                    contentDescription = "Favorite",
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(BGTransparent)
-                        .padding(5.dp),
-                    tint = if (item.isFav) Color.Red else Color.Gray
-                )
-            }
-        }
+        ImageWithFavAndText(item = item)
     }
 }
 
